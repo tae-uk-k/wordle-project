@@ -9,7 +9,7 @@ turn = 0
 print("wordle game start!!!")
 while(True):
     turn += 1
-    ###############
+    
     #입력부
     correctAnswer = True
     while(correctAnswer):
