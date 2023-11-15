@@ -1,3 +1,18 @@
+import tkinter as tk
+window = tk.Tk()
+window.title("< Wordle Game >")
+window.geometry("500x500+500+150")
+window.resizable(False, False)
+
+def keyboardClicked():
+    print(1)
+
+
+button = [tk.Button(window, text="버튼 1", command=keyboardClicked) for i in range(26)]
+for i in range(26):
+    button[i].pack(side = tk.LEFT)
+
+
 keyword = "random"
 wordLength = len(keyword)
 #임의로 시작 단어를 "random"으로 지정함
