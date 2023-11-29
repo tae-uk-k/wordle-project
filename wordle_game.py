@@ -1,7 +1,7 @@
 import tkinter as tk
 import pandas as pd
 import random
-
+import pickle
 #print(df)
 '''
 window = tk.Tk()
@@ -19,14 +19,14 @@ for i in range(26):
 '''
 
 class Wordle:
-    df = pd.read_excel("./단어장전처리.xlsx", sheet_name="vocList", header = None)
+    df = pd.read_excel(r"C:\Users\user\Downloads\단어장전처리.xlsx", sheet_name="vocList", header = None)
     difficulty = 0
     difficultyArea = [[3, 4, 5, 6], [7, 8, 9], [10, 11, 12, 13, 14, 15, 16]]
     keyword = ""
     wordLength = 0
     
     def __init__(self):
-        df = pd.read_excel("./단어장전처리.xlsx", sheet_name="vocList", header = None)
+        df = pd.read_excel(r"C:\Users\user\Downloads\단어장전처리.xlsx", sheet_name="vocList", header = None)
     
     def preSetting(self):
         lengthList = []
@@ -89,8 +89,31 @@ class Wordle:
                     elif(wordStatus[i][j] == 3):
                         print(' ', inputWord[i][j], '!',sep='', end=' ')
                 print()
+class saveData:
+    def save_game_state(player_name, score):
+        data = {
+           'player_name': player_name,
+           'score': score
+           }
+        with open('game_state.pkl', 'wb') as file:
+            pickle.dump(data, file)
+    def load_game_state(self):
+        try:
+            with open('game_state.pkl', 'rb') as file:
+                data = pickle.load(file)
+                return data['player_name'], data['score']
+        except FileNotFoundError:
+            return None, 0
+    def start_game(self):
+        player_name, score = self.load_game_state()
 
+        if player_name is None:
+            player_name = input("플레이어 이름을 입력하세요: ")
 
+        print(f"안녕하세요, {player_name}! 현재 점수는 {score}점입니다.")
+        #save_game_state(player_name, score)<-저장하는 코드 어디에 써야할ㄹ 지 몰라서 일단 주석처리함
+s=saveData()
+s.start_game()
 w = Wordle()
 w.preSetting()
 w.gamePlay()
@@ -107,4 +130,5 @@ w.gamePlay()
 
 
 
+  
 
