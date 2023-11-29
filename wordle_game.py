@@ -1,4 +1,10 @@
 import tkinter as tk
+import pandas as pd
+import random
+
+df = pd.read_excel("./단어장전처리.xlsx", sheet_name="vocList", header = None)
+#print(df)
+'''
 window = tk.Tk()
 window.title("< Wordle Game >")
 window.geometry("500x500+500+150")
@@ -11,10 +17,32 @@ def keyboardClicked():
 button = [tk.Button(window, text="버튼 1", command=keyboardClicked) for i in range(26)]
 for i in range(26):
     button[i].pack(side = tk.LEFT)
+'''
 
+difficulty = 0
+difficultyArea = [[3, 4, 5, 6], [7, 8, 9], [10, 11, 12, 13, 14, 15, 16]]
 
-keyword = "random"
+lengthList = []
+lengthSum = 0
+for v in difficultyArea[difficulty]:
+    lengthList.append(df[v - 1][0])
+    lengthSum += df[v - 1][0]
+
+randomNumber = random.randrange(0, lengthSum - 1)
+print("randomNumber :", randomNumber)
+for i in range(len(difficultyArea[difficulty])):
+    if (randomNumber > lengthList[i]):
+        randomNumber -= lengthList[i]
+        continue
+    else:
+        keyword = df[v - 1][randomNumber + 1]
+        break
+
+print(keyword)
+
+#keyword = "random"
 wordLength = len(keyword)
+
 #임의로 시작 단어를 "random"으로 지정함
 
 inputWord = [[' ' for j in range(wordLength)] for i in range(wordLength + 1)]
