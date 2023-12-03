@@ -17,7 +17,10 @@ for i in range(26):
 '''
 
 from Wordle import Wordle
+from SaveData import saveData
 
+s=saveData()
+s.start_game()
 w = Wordle()
 w.preSetting()
 w.gamePlay()
