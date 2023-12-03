@@ -1,33 +1,13 @@
-import tkinter as tk
-
-
-'''
-window = tk.Tk()
-window.title("< Wordle Game >")
-window.geometry("500x500+500+150")
-window.resizable(False, False)
-
-def keyboardClicked():
-    print(1)
-
-
-button = [tk.Button(window, text="버튼 1", command=keyboardClicked) for i in range(26)]
-for i in range(26):
-    button[i].pack(side = tk.LEFT)
-'''
-
 from Wordle import Wordle
 from SaveData import saveData
 
 s=saveData()
 s.start_game()
 w = Wordle()
+ans = input("난이도를 입력하세요(쉬움 : 0, 보통 : 1, 어려움 : 2) : ")
+w.setDifficulty(ans)
 w.preSetting()
 w.gamePlay()
-
-
-
-
 
 
 

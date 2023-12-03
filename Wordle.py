@@ -8,6 +8,9 @@ class Wordle:
     keyword = ""
     wordLength = 0
     
+    def setDifficulty(self, num):
+        self.difficulty = int(num)
+
     def checkMatch(self, l, str, size):
         for i in range(size):
             if l[i] != str[i]:
@@ -24,23 +27,24 @@ class Wordle:
         for v in self.difficultyArea[self.difficulty]:
             lengthList.append(self.df[v - 1][0])
             lengthSum += self.df[v - 1][0]
-            randomNumber = random.randrange(0, lengthSum - 1)
-            print("randomNumber :", randomNumber) #for debuging
+        randomNumber = random.randrange(0, lengthSum - 1)
+        
         for i in range(len(self.difficultyArea[self.difficulty])):
             if (randomNumber > lengthList[i]):
                 randomNumber -= lengthList[i]
                 continue
             else:
-                self.keyword = self.df[v - 1][randomNumber + 1]
+                self.keyword = self.df[i + self.difficultyArea[self.difficulty][0] - 1][randomNumber + 1]
+                self.wordLength = len(self.keyword)
                 break
-        self.wordLength = len(self.keyword)
-        #keyword를 임의화 시켰는데 범위가 맞는지 확신하지 못하겠음.....
+            #keyword를 임의화 시켰는데 여전히 범위가 맞는지 확신하지 못하겠음.....
         
     def preSetting(self):
         self.getRandomKeyword()
 
 
     def gamePlay(self):
+        print(self.keyword, "!!!!!!!!!!!!!!!!!!!!!")
         inputWord = [[' ' for j in range(self.wordLength)] for i in range(self.wordLength + 1)]
         wordStatus = [[0 for j in range(self.wordLength)] for i in range(self.wordLength + 1)]    # 0 - 미입력, 1 - 없음, 2 - 있지만 자리가 다름, 3 - 자리까지 같음
         turn = 0
@@ -95,4 +99,4 @@ class Wordle:
         if (gameWin):
             print("이김")
         elif (gameLose):
-            print("짐")
+            print("짐")#여기 게임결과 반환함수 하나 만들어도 돼? savedata에서 가져가서 점수 할당하고 저장하게
