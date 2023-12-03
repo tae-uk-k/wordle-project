@@ -7,7 +7,11 @@ class Wordle:
     difficultyArea = [[3, 4, 5, 6], [7, 8, 9], [10, 11, 12, 13, 14, 15, 16]]
     keyword = ""
     wordLength = 0
+    lastTurn = 0
     
+    def getTurn(self):
+        return self.lastTurn
+
     def setDifficulty(self, num):
         self.difficulty = int(num)
 
@@ -35,7 +39,11 @@ class Wordle:
                 continue
             else:
                 self.keyword = self.df[i + self.difficultyArea[self.difficulty][0] - 1][randomNumber + 1]
-                self.wordLength = len(self.keyword)
+                try:#nan 값이 뜰 수 있을까봐.....
+                    self.wordLength = len(self.keyword)
+                except:
+                    print("에러ㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓ")
+                    self.getRandomKeyword()
                 break
             #keyword를 임의화 시켰는데 여전히 범위가 맞는지 확신하지 못하겠음.....
         
@@ -97,6 +105,8 @@ class Wordle:
                 print()
         
         if (gameWin):
+            self.lastTurn = turn
             print("이김")
         elif (gameLose):
-            print("짐")#여기 게임결과 반환함수 하나 만들어도 돼? savedata에서 가져가서 점수 할당하고 저장하게
+            print("짐")#여기 게임결과 반환함수 하나 만들어도 돼? savedata에서 가져가서 점수 할당하고 저장하게네네넨ㄴ
+
