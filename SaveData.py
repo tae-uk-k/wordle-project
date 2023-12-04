@@ -1,7 +1,8 @@
 import pickle
 
 class saveData:
-    def save_game_state(player_name, score):
+
+    def save_game_state(self,player_name, score):
         data = {
            'player_name': player_name,
            'score': score
@@ -16,12 +17,14 @@ class saveData:
         except FileNotFoundError:
             return None, 0
     def start_game(self):
-        player_name, score = self.load_game_state()
+        self.player_name, self.score = self.load_game_state()
 
-        if player_name is None:
-            player_name = input("플레이어 이름을 입력하세요: ")
+        if self.player_name is None:
+            self.player_name = input("플레이어 이름을 입력하세요: ")
+        if self.score is None:
+            self.score=0
 
-        print(f"안녕하세요, {player_name}! 현재 점수는 {score}점입니다.")
+        print(f"안녕하세요, {self.player_name}! 현재 점수는 {self.score}점입니다.")
         
     def set_score(self, new_score):
         player_name, old_score = self.load_game_state()
@@ -30,3 +33,4 @@ class saveData:
     def get_score(self):
         _, score = self.load_game_state()
         return score
+
