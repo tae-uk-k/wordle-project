@@ -1,5 +1,6 @@
 import pandas as pd
 import random
+from googletrans import Translator, LANGUAGES
 
 class Wordle:
     df = pd.read_excel("./단어장전처리.xlsx", sheet_name="vocList", header = None)
@@ -67,7 +68,13 @@ class Wordle:
                 if (turn > self.wordLength + 1):
                     gameLose = True
                     break
-                ans = input(">>")
+                while(True):
+                    ans = input("영단어를 입력하세요>>")
+                    ans = ans.lower()
+                    if is_valid_english_word(ans):
+                        break
+                    else:
+                        print("단어가 존재하지 않습니다.")
                 if (len(ans) > self.wordLength):#실제로는 쓰지 않을 조건문
                     continue
                 if (False):#사전에 있는지 확인해야함
@@ -109,4 +116,21 @@ class Wordle:
             print("이김")
         elif (gameLose):
             print("짐")#여기 게임결과 반환함수 하나 만들어도 돼? savedata에서 가져가서 점수 할당하고 저장하게네네넨ㄴ
+
+def is_valid_english_word(word):
+    translator = Translator()
+
+    try:
+        detected_language = translator.detect(word).lang
+
+        if detected_language == 'en':
+            translation = translator.translate(word, src=detected_language, dest=detected_language)
+            return translation.text.lower() == word.lower()
+
+    except Exception as e:
+        print(f"오류 발생: {e}")
+
+    
+    return False
+
 
